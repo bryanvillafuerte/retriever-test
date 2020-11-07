@@ -1,0 +1,25 @@
+@import "../../node_modules/rfs/scss";
+
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background: #E5EAEF;
+
+  .display-1 {
+    color: #032340;
+    @include font-size(6rem);
+    @include margin-top(4rem);
+    @include margin-bottom(2rem);
+  }
+
+  .input-group {
+    span {
+      margin-left: 5px;
+    }
+  }
+
+  .card {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+}
