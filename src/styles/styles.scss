@@ -12,9 +12,12 @@ body {
     @include margin-bottom(2rem);
   }
 
-  .input-group {
-    span {
-      margin-left: 5px;
+  .jumbotron {
+    background: #203647;
+    margin: 0;
+    
+    .form-label {
+      color: #E5EAEF;
     }
   }
 
