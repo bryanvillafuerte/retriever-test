@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Container, CardColumns, Jumbotron, Form } from 'react-bootstrap/';
 import TwitterStory from './components/TwitterStory';
 import data from './data/data.json';
-import Fade from 'react-reveal/Fade';
-import Slide from 'react-reveal/Slide';
+import { Slide } from 'react-reveal/';
 
 export default function App() {
+  const initialList = data[0].documents;
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   
@@ -14,12 +14,15 @@ export default function App() {
   };
   
   useEffect(() => {
-    const results = data.filter(outerData =>
-      outerData.documents.filter(innerData =>
-        innerData.author.displayName.includes(searchTerm.toLowerCase))
-    );
-    setSearchResults(results);
-  }, [searchTerm]);
+    if(searchTerm !== "") {
+			let results = initialList.filter((innerData) =>{
+					return(innerData.author.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
+			});			
+			setSearchResults(results);
+		} else {
+			setSearchResults(initialList);
+		}
+  }, [initialList, searchTerm]);
 
   return (
     <>
@@ -43,15 +46,14 @@ export default function App() {
         </Jumbotron>
 
         <CardColumns>
-          {searchResults.map((outerData) => 
-            <div>
-              {outerData.documents.map((innerData) =>
-                <Fade bottom key={innerData.id}>
-                  <TwitterStory storyTitle={innerData.story.replace( /(<([^>]+)>)/ig, '')} author={innerData.author.displayName} />
-                </Fade>
-              )}
+          {searchResults.map((innerData, key) => (
+            <div key={key}>
+              <TwitterStory
+                storyTitle={innerData.story.replace(/(<([^>]+)>)/gi, "")}
+                storyAuthor={innerData.author.displayName}
+              />
             </div>
-          )};
+          ))}
         </CardColumns>
       </Container>
     </>
